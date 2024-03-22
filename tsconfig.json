@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
+    "strict": true,
+    "allowJs": true,
     "outDir": "build",
     "skipLibCheck": true,
     "module": "nodenext",
     "resolveJsonModule": true,
     "lib": ["ESNext"]
   },
-  "include": ["test/**/*.ts", "src/**/*.ts"],
+  "include": ["src/**/*.js", "src/**/*.ts"]
 }

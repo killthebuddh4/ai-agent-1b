@@ -5,8 +5,9 @@
   },
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run build:watch\" \"nodemon build/src/server.js\"",
-    "test": "mocha build/test/server.test.js",
+    "dev": "concurrently \"npm run build:watch\" \"nodemon build/server.js\"",
+    "test": "mocha build/**/*.test.js",
+    "test:e2e": "mocha build/**/*.e2e.test.js",
     "lint": "eslint .",
     "format": "prettier --check .",
     "types": "tsc --noEmit",
@@ -15,6 +16,7 @@
     "check": "npm run lint && npm run format && npm run types && npm run build && npm run test"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.39.8",
     "@types/mocha": "^10.0.3",
     "@types/node": "^20.8.10",
     "concurrently": "^8.2.2",
@@ -23,6 +25,7 @@
     "mocha": "^10.2.0",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
+    "supabase": "^1.150.0",
     "typescript": "^5.2.2",
     "zod": "^3.22.4"
   },
