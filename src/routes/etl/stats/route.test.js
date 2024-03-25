@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 describe("/stats", () => {
-  it.only("POST", async () => {
+  it("POST", async () => {
     const response = await fetch("http://localhost:3000/etl/stats", {
       method: "GET",
       headers: { "Content-Type": "application/json" },

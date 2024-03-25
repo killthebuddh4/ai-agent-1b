@@ -1,13 +1,15 @@
 import { z } from "zod";
 
-describe("/load", () => {
-  it("POST", async () => {
-    const response = await fetch("http://localhost:3000/etl/load", {
+describe("/chunk", () => {
+  it.only("POST", async function () {
+    this.timeout(10000);
+
+    const response = await fetch("http://localhost:3000/etl/chunk", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        fromDirectory: "./.data",
-        options: { fileExtsToInclude: ["md"] },
+        numTokensInChunk: 100,
+        numTokensInOverlap: 20,
       }),
     });
 
@@ -23,9 +25,7 @@ describe("/load", () => {
 
     const zResponse = z.object({
       ok: z.literal(true),
-      data: z.object({
-        numFilesLoaded: z.number().positive(),
-      }),
+      data: z.object({}),
     });
 
     zResponse.parse(json);

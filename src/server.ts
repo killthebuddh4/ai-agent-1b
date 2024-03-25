@@ -1,24 +1,7 @@
 import express from "express";
 import { route as loadRoute } from "./routes/etl/load/route.js";
 import { route as statsRoute } from "./routes/etl/stats/route.js";
-
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
-console.log("stats route", statsRoute);
+import { route as chunkRoute } from "./routes/etl/basic/chunk/route.js";
 
 const app = express();
 
@@ -29,6 +12,7 @@ app.get("/heartbeat", (_, res) => {
 });
 
 app.post("/etl/load", loadRoute);
+app.post("/etl/chunk", chunkRoute);
 app.get("/etl/stats", statsRoute);
 
 app.listen(3000, () => {
