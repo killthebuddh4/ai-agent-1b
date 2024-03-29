@@ -1,16 +1,13 @@
 import { z } from "zod";
 
-describe("/chunk", () => {
+describe("/embed", () => {
   it("POST", async function () {
-    this.timeout(10000);
+    this.timeout(20000);
 
-    const response = await fetch("http://localhost:3000/etl/chunk", {
+    const response = await fetch("http://localhost:3000/etl/embed", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        numTokensInChunk: 100,
-        numTokensInOverlap: 20,
-      }),
+      body: JSON.stringify({}),
     });
 
     const json = await (async () => {

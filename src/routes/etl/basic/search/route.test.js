@@ -1,17 +1,19 @@
 import { z } from "zod";
 
-describe("/chunk", () => {
-  it("POST", async function () {
-    this.timeout(10000);
+describe("/search", () => {
+  it.only("POST", async function () {
+    this.timeout(20000);
 
-    const response = await fetch("http://localhost:3000/etl/chunk", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        numTokensInChunk: 100,
-        numTokensInOverlap: 20,
-      }),
-    });
+    const text = "but I try my best";
+    const maxDistance = 0.3;
+
+    const response = await fetch(
+      `http://localhost:3000/etl/search?text=${text}&maxDistance=${maxDistance}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      },
+    );
 
     const json = await (async () => {
       try {
@@ -22,6 +24,8 @@ describe("/chunk", () => {
         throw error;
       }
     })();
+
+    console.log(JSON.stringify(json, null, 2));
 
     const zResponse = z.object({
       ok: z.literal(true),

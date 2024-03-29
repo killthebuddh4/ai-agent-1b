@@ -8,14 +8,16 @@ export const chunk = async ({
   numTokensInChunk: number;
   numTokensInOverlap: number;
 }) => {
-  const { data } = await supabase.from("files").select("id, filename, text");
+  const { data: filesData } = await supabase
+    .from("files")
+    .select("id, filename, text");
 
-  if (data === null) {
+  if (filesData === null) {
     throw new Error("Not yet handled");
   }
 
-  for (let i = 0; i < data.length; i++) {
-    const file = data[i];
+  for (let i = 0; i < filesData.length; i++) {
+    const file = filesData[i];
     const words = file.text.split(" ");
     let chunkStart = 0;
     let chunkEnd = 0;
@@ -23,12 +25,12 @@ export const chunk = async ({
     while (chunkEnd < words.length) {
       chunkEnd += 4;
 
-      const tokenInfo = getTokenizationInfo({
+      const { numTokens } = getTokenizationInfo({
         forModel: "text-embedding-ada-002",
         inText: words.slice(chunkStart, chunkEnd).join(" "),
       });
 
-      if (tokenInfo.numTokens > numTokensInChunk) {
+      if (numTokens > numTokensInChunk) {
         const result = await supabase.from("chunks").insert({
           file: file.id,
           chunk_start: chunkStart,
@@ -55,4 +57,18 @@ export const chunk = async ({
       throw new Error("Problem inserting chunk");
     }
   }
+
+  const { count: numChunks, error } = await supabase
+    .from("chunks")
+    .select("id", { count: "exact", head: true });
+
+  if (error) {
+    throw new Error("Problem getting chunks");
+  }
+
+  if (numChunks === null) {
+    throw new Error("No chunks found");
+  }
+
+  return { numChunks };
 };

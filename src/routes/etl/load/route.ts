@@ -16,7 +16,5 @@ export const route = async (req: Request, res: Response) => {
 
   const result = await load(body);
 
-  console.log(result);
-
   res.json({ ok: true, data: result });
 };

@@ -18,6 +18,10 @@ const configSchema = zJsonString.pipe(
   z.object({
     SUPABASE_URL: z.string(),
     SUPABASE_KEY: z.string(),
+    OPENAI_API_KEY: z.string(),
+    EMBEDDINGS_FILE_PATH: z
+      .string()
+      .default("./.data/embeddings/embeddings.json"),
   }),
 );
 

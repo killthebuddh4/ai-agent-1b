@@ -18,7 +18,7 @@ export const load = async ({
     await supabase.from("files").insert([{ filename, text: fileText }]);
   }
 
-  return { ok: true, numFilesLoaded: filenamesToRead.length };
+  return { numFilesLoaded: filenamesToRead.length };
 };
 
 const walkDirForFilenames = async ({
